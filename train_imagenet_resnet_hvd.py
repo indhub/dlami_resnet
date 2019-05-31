@@ -913,6 +913,10 @@ def main():
     FLAGS.data_dir = None if FLAGS.data_dir == "" else FLAGS.data_dir
     FLAGS.log_dir = None if FLAGS.log_dir == "" else FLAGS.log_dir
 
+    if FLAGS.use_xla:
+        config.graph_options.optimizer_options.global_jit_level = (tf.OptimizerOptions.ON_1)
+        config.graph_options.rewrite_options.pin_to_host_optimization = (rewriter_config_pb2.RewriterConfig.OFF)
+
     if FLAGS.eval:
         FLAGS.log_name = 'eval_' + FLAGS.log_name
     if FLAGS.local_ckpt:
