@@ -866,6 +866,10 @@ def add_cli_args():
                          help="""hue max delta factor, hue delta = hue * math.pi""")
     cmdline.add_argument('--brightness', default=0.3, type=float,
                          help="""Brightness factor""")
+    
+    cmdline.add_argument('--use_xla', default=False, type=bool,
+                         help="""Use XLA optimization""")
+    
     return cmdline
 
 
@@ -915,7 +919,7 @@ def main():
 
     if FLAGS.use_xla:
         config.graph_options.optimizer_options.global_jit_level = (tf.OptimizerOptions.ON_1)
-        config.graph_options.rewrite_options.pin_to_host_optimization = (rewriter_config_pb2.RewriterConfig.OFF)
+        #config.graph_options.rewrite_options.pin_to_host_optimization = (rewriter_config_pb2.RewriterConfig.OFF)
 
     if FLAGS.eval:
         FLAGS.log_name = 'eval_' + FLAGS.log_name
